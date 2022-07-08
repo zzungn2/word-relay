@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>끝말잇기</title>
+  </head>
+
+  <body>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text" />
+    <button>입력</button>
+    <script>
+      /* ----------------- 참가자 수 ----------------- */
+      const number = parseInt(prompt("몇 명이 참가하나요?"), 10); //값을 전달받음. 기본적으로 문자열. 숫자로 바꿔준다. 기본적으로 10진법
+      // console.log(number) ;
+      // alert(number); // 경고창
+      // confirm(number); // 확인
+
+      /* ------------------- 태그 --------------------- */
+      const $order = document.querySelector("#order");
+      const $word = document.querySelector("#word");
+      const $input = document.querySelector("input");
+      const $button = document.querySelector("button");
+      // console.log($order);
+      // console.log($word);
+      // console.log($input);
+      // console.log($button);
+
+      /* ------------------ 입력값 -------------------- */
+      let word; // 제시어
+      let newWord; // 새로 입력한 단어
+
+      /* -------------- addEventListener -------------- */
+      const onInput = (event) => {
+        newWord = event.target.value;
+      };
+
+      const onClickButton = () => {
+        if (!word) {
+          // 제시어가 비어있는가?
+
+          // 비어있다
+          word = newWord; // 입력한 단어가 제시어가 된다
+          $word.textContent = word;
+
+          // 다른 사람에게 순서를 넘긴다
+          const order = parseInt($order.textContent); // 현재 순서
+          if (order === number) {
+            $order.textContent = 1;
+          } else {
+            $order.textContent = order + 1;
+          }
+
+          //입력창을 비우고 커서를 둔다
+          $input.value = "";
+        } else {
+          // 비어있지 않다
+
+          if (word[word.length - 1] === newWord[0]) {
+            // 입력한 단어가 올바른가?
+
+            // 올바르다
+            word = newWord; // 입력한 단어가 제시어가 된다
+            $word.textContent = word;
+
+            // 다른 사람에게 순서를 넘긴다
+            const order = parseInt($order.textContent); // 현재 순서
+            if (order === number) {
+              $order.textContent = 1;
+            } else {
+              $order.textContent = order + 1;
+            }
+
+            //입력창을 비우고 커서를 둔다
+            $input.value = "";
+          } else {
+            // 올바르지 않다
+
+            //틀렸다고 표시한다
+            alert("올바르지 않는 단어입니다");
+          }
+        }
+      };
+      // 콜백 함수 = 리스터 함수 = 익명 함수
+      $input.addEventListener("input", onInput);
+      $button.addEventListener("click", onClickButton);
+    </script>
+  </body>
+</html>
